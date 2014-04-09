@@ -9,6 +9,8 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "request": "~2.34.0"
+    "request": "~2.34.0",
+    "async": "~0.7.0",
+    "sanitize-filename": "~1.0.1"
   }
 }
