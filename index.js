@@ -1,11 +1,12 @@
 var request = require('request');
 var Url = require('url');
-var fs = require('fs');
+var fs = require('graceful-fs');
 var async = require('async');
 var sanitizeFilename = require('sanitize-filename');
 
 var APP_ID = "52b8025a";
 var APP_KEY = "d5929f45ba3383b8cfcf6bb1bca70da4";
+process.env.FSM_APP_KEY= "d5929f45ba3383b8cfcf6bb1bca70da4";
 
 var getMetadata = function (options, callback) {
   var options = options || {};
