@@ -39,7 +39,16 @@ var handleErrors = function (callback) {
   };
 };
 
-
 getMetadata({}, handleErrors(function (body) {
-  console.log(body) // Print the api content
+  body = JSON.parse(body);
+  
+  var options = {
+    rows: body.response.numFound,
+  };
+
+  getMetadata(options, handleErrors(function (body) {
+    //body = JSON.parse(body);
+
+    console.log(body) // Print the api content
+  }));
 }));
