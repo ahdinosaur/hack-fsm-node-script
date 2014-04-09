@@ -1,5 +1,8 @@
 var request = require('request');
 var Url = require('url');
+var fs = require('fs');
+var async = require('async');
+var sanitizeFilename = require('sanitize-filename');
 
 var APP_ID = "52b8025a";
 var APP_KEY = "d5929f45ba3383b8cfcf6bb1bca70da4";
@@ -39,6 +42,7 @@ var handleErrors = function (callback) {
   };
 };
 
+// query to get how many documents are present
 getMetadata({}, handleErrors(function (body) {
   body = JSON.parse(body);
   
@@ -46,9 +50,25 @@ getMetadata({}, handleErrors(function (body) {
     rows: body.response.numFound,
   };
 
+  // query all documents
   getMetadata(options, handleErrors(function (body) {
-    //body = JSON.parse(body);
+    body = JSON.parse(body);
 
-    console.log(body) // Print the api content
+    // for each document in body
+    async.each(body.response.docs, function (doc, callback) {
+
+      // construct file path based on id
+      var fileName = sanitizeFilename(doc.id);
+      var filePath = __dirname + "/data/" + fileName;
+
+      // stringify document
+      doc = JSON.stringify(doc, null, 2);
+
+      // write document to file
+      fs.writeFile(filePath, doc, callback);
+
+    }, function (err) {
+      if (err) { throw err; }
+    });
   }));
 }));
