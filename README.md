@@ -11,5 +11,7 @@ npm install
 ## how to run
 
 ```
+export FSM_APP_KEY="123..."
+
 node .
 ```
